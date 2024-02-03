@@ -319,7 +319,7 @@ def DownloadDump():
 	needSpace = int(dumpSize) * 3
 	diskSpace = psutil.disk_usage("/var")
 	if needSpace > diskSpace.free:
-		return
+		local.add_log(f'Not enough space on disk. Need {needSpace} bytes, but only {diskSpace.free} bytes available', "warning")
 	#end if
 
 	# apt install
