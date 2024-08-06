@@ -2677,6 +2677,16 @@ class MyTonCore():
 		return validators
 	#end define
 
+	def find_myself_in_el(self):
+		save_elections = self.GetSaveElections()
+		my_adnl = self.GetAdnlAddr()
+		for election_id, election in save_elections.items():
+			for adnl in election:
+				if adnl == my_adnl:
+					return True
+		return False
+	#end define
+
 	def CheckValidators(self, start, end):
 		local.add_log("start CheckValidators function", "debug")
 		electionId = start
@@ -3066,7 +3076,7 @@ class MyTonCore():
 	def GetSaveOffers(self):
 		bname = "saveOffers"
 		saveOffers = local.db.get(bname)
-		if saveOffers is None:
+		if saveOffers is None or isinstance(saveOffers, list):
 			saveOffers = dict()
 			local.db[bname] = saveOffers
 		return saveOffers
